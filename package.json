@@ -1,9 +1,9 @@
 {
-  "name": "what-can-i-make",
+  "name": "what-can-you-make",
   "version": "0.0.1",
   "description": "a simple tool to see what can be made with what you have",
   "main": "dist/index.js",
-  "repository": "git@github.com:hweeks/what-can-i-make.git",
+  "repository": "git@github.com:hweeks/what-can-you-make.git",
   "author": "hweeks",
   "license": "MIT",
   "private": false,

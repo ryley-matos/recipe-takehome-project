@@ -45,7 +45,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'what can i make',
+      title: 'what can you make',
       template: './static/index-template.html'
     }),
     new webpack.HotModuleReplacementPlugin()

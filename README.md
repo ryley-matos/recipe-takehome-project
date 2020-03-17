@@ -1,4 +1,4 @@
-# What To Make
+# What Can You Make
 
 ## Installation
 
@@ -38,6 +38,7 @@ This will start the backend, run webpack, and handle request proxying for the fr
 ```js
 {
   name: string,
+  instructions: string,
   ingredients: string[]
 }
 ```
@@ -48,5 +49,11 @@ This will start the backend, run webpack, and handle request proxying for the fr
   1. fix the search function
   1. add a recipe component to display the response
   1. add routing so that you can land on a recipe page or reload and have the same search
-  1. add unit tests using jest, mocha, ava, or jasmine
-  1. add integration tests using puppeteer, webdriver, or selenium powered tests
+  1. add unit tests using jest, mocha, ava, jasmine, etc...
+
+## Bonus
+
+  1. add ci/cd using travis, circleCI, etc...
+  1. containerize the application
+  1. add deployments using heroku, digital ocean, etc...
+  1. add integration tests using puppeteer, webdriver, selenium, etc...
