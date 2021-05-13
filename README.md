@@ -50,6 +50,7 @@ Navigate to [localhost:3000](http://localhost:3000) to see the frontend running!
 
   1. fix the search function
   1. add a recipe component to display the response
+  1. add a recipe api to return the recipe (matching the above api docs!)
   1. add routing so that you can land on a recipe page or reload and have the same search
   1. add unit tests using jest, mocha, ava, jasmine, etc...
 

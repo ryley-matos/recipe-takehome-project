@@ -10,9 +10,8 @@ const appStartup = async () : Promise<void> => {
   // add parsers for the body
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: false }))
-  // create our two routes
+  // create our routes
   app.post('/api/search', searchMiddleware)
-  app.get('/api/recipe/:id', recipeMiddleware)
   // create a server
   const httpServer = new http.Server(app)
   httpServer.listen(4000, "0.0.0.0", () => {
