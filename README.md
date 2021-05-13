@@ -16,6 +16,8 @@ To bring up locally run:
 
 This will start the backend, run webpack, and handle request proxying for the front end.
 
+Navigate to [localhost:3000](http://localhost:3000) to see the frontend running!
+
 ## API
 
 ### /api/search
@@ -56,4 +58,4 @@ This will start the backend, run webpack, and handle request proxying for the fr
   1. add ci/cd using travis, circleCI, etc...
   1. containerize the application
   1. add deployments using heroku, digital ocean, etc...
-  1. add integration tests using puppeteer, webdriver, selenium, etc...
+  1. add integration tests using puppeteer, webdriver, playwright, etc...
