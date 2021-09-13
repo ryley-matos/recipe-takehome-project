@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { HomeWrapper } from "./styles"
@@ -11,11 +12,21 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import Recipe from '../Recipe'
 import * as actions from '../../actions'
 
 const ingredientList = [
   "flour", "sugar", "salt", "butter", "milk"
 ]
+
+const getParamData = (props) => {
+  const urlParams = new URLSearchParams(props.location.search)
+  return {
+    selected: urlParams.get('selected'),
+    term: urlParams.get('term') || '',
+    ingredients: (urlParams.get('ingredients') || '').split(',')
+  }
+}
 
 class Home extends Component {
   constructor(props) {
@@ -23,14 +34,38 @@ class Home extends Component {
     this.handleSearch = this.handleSearch.bind(this)
     this.handleIngredient = this.handleIngredient.bind(this)
     this.fetchSearch = this.fetchSearch.bind(this)
+    this.changeUrlParams = this.changeUrlParams.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
     this.state = {
       term: "",
-      ingredients: ["milk"]
+      ingredients: [""],
+      selected: null
     }
+  }
+  componentDidMount() {
+    const {selected, term, ingredients} = getParamData(this.props)
+    const { searchRecipes } = this.props
+    searchRecipes(term, ingredients)
+    if (selected) {
+      this.handleSelect(selected)
+    }
+    this.setState({selected, term, ingredients})
+  }
+  changeUrlParams(params) {
+    const urlParams = new URLSearchParams(this.props.location.search)
+    for (var key in params) {
+      urlParams.set(key, params[key])
+    }
+    this.props.history.push({search: `?${urlParams.toString()}`})
   }
   fetchSearch () {
     const { searchRecipes } = this.props
     const { term, ingredients } = this.state
+
+    this.changeUrlParams({
+      term, ingredients: ingredients.join(',')
+    })
+
     searchRecipes(term, ingredients)
   }
   handleSearch(event) {
@@ -46,6 +81,13 @@ class Home extends Component {
       ingredients.splice(foundIngredient, 1)
     }
     this.setState({ingredients})
+  }
+  handleSelect(id) {
+    const { findRecipe } = this.props
+
+    this.setState({selected: id})
+    this.changeUrlParams({selected: id})
+    findRecipe(id)
   }
   render () {
     const {term, ingredients} = this.state
@@ -84,7 +126,7 @@ class Home extends Component {
           recipes && (
             <List>
               {recipes.map( recipe =>
-                <ListItem key={recipe.id}>
+                <ListItem key={recipe.id} onClick={() => this.handleSelect(recipe.id)}>
                   <ListItemText primary={recipe.name} />
                 </ListItem>
               )}
@@ -93,11 +135,7 @@ class Home extends Component {
         }
         {isLoading && <LinearProgress />}
         <Divider />
-        {/*
-          TODO: Add a recipe component here.
-          I'm expecting you to have it return null or a component based on the redux state, not passing any props from here
-          I want to see how you wire up a component with connect and build actions.
-        */}
+        <Recipe />
       </HomeWrapper>
     )
   }
@@ -110,6 +148,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   searchRecipes: actions.searchRecipes,
+  findRecipe: actions.findRecipe
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
