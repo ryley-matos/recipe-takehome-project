@@ -23,3 +23,9 @@ export const createAndConnectToServer = async () : Promise<typeof mongoose> => {
   return connection
 }
 
+export const dropDatabase = async () => {
+  const connection = mongoose.connection
+  await connection.db.dropDatabase()
+  await connection.close()
+}
+
